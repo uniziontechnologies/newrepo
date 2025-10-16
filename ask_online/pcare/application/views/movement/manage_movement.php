@@ -1,0 +1,267 @@
+<?php 
+      $this->load->view("header");
+?> 
+
+<style type="text/css">
+   .font_th{
+
+	    font-size: 15px;
+   }
+   #success{
+        padding-top: 15px;
+        font-size: 14px;    
+   }
+   .single{
+            display:inline;
+   }
+</style>
+
+<form name="manage_movement" id="manage_movement" method="post" action="">
+
+    <div class="container"  id="content">
+          <!-- Content Header (Page header) -->
+          <section class="content-header">
+            <h1>
+                  MOVEMENT LIST
+            </h1>
+           
+          </section>
+
+          <!-- Main content -->
+          <section class="content">
+            <div class="row">
+          <div class="col-md-12">
+		    <div class="box box-info">
+            
+               <div class="box-body">
+			      <table width="100%" class="table table-striped">
+				
+				    <tr>
+				        <td>
+                         From Date : 
+                </td>
+                <td>
+                          <input type="text" name="from_date" id="from_date" value="<?php echo !empty($from_date)?$from_date:'' ?>" autocomplete="off" readonly="true">             
+                </td>
+                <td>
+
+                         End Date : 
+                </td>
+                <td>
+                          <input type="text" name="end_date" id="end_date" value="<?php echo !empty($end_date)?$end_date:'' ?>" autocomplete="off" readonly="true">
+                </td>        
+                <td>
+                         Move From : 
+                </td>
+                <td>
+                         <select name="from" id="from">
+                            <option value="">------select-----</option>
+                            <option value="main_stock" <?php echo (!empty($from_branch) && ($from_branch=='main_stock')?'selected':''); ?> >Main Stock</option>
+
+        <?php
+                for($i=0; $i<count($branchInfo); $i++) 
+                    { 
+        ?>
+                           <option value="<?php echo $branchInfo[$i][0]; ?>" <?php echo (!empty($from_branch) && ($from_branch==$branchInfo[$i][0])?'selected':''); ?> ><?php echo $branchInfo[$i][1]; ?></option>         
+        <?php
+                    }
+        ?>                    
+
+                         </select>
+                </td>
+                <td>
+                        Move To : 
+                </td>
+                <td>
+                           <select name="to" id="to">
+                            <option value="">------select-----</option>
+                            <option value="main_stock" <?php echo (!empty($to_branch) && ($to_branch=='main_stock')?'selected':''); ?> >Main Stock</option>
+
+        <?php
+                for($i=0; $i<count($branchInfo); $i++) 
+                    { 
+        ?>
+                           <option value="<?php echo $branchInfo[$i][0]; ?>" <?php echo (!empty($to_branch) && ($to_branch==$branchInfo[$i][0])?'selected':''); ?> ><?php echo $branchInfo[$i][1]; ?></option>         
+        <?php
+                    }
+        ?>                  
+                         
+				         
+				        </td>
+				        
+				    </tr>
+            <tr>
+                <td>
+                          Bill No :
+                </td>
+                <td>
+                          <input type="text" name="bill_no" id="bill_no" value="<?php echo !empty($bill_no)?$bill_no:'' ?>" autocomplete="off"> 
+                </td>  
+                <td colspan="4" align="center">
+                      <button type="button" class="btn btn-info" onclick="searchForm()">
+                      <span class="glyphicon glyphicon-search"></span> Search
+                      </button>
+                      <button type="button" class="btn btn-danger" onclick="clearForm()">
+                              <span class="glyphicon glyphicon-refresh"></span> Clear
+                    </button>
+                </td>
+            </tr>
+                   
+				  </table>
+			   </div><!--boxbody-->
+			  </div><!--boxinfo-->
+			</div><!--col-md-12-->
+		  </div> <!--row-->
+        <div class="row">
+
+           <div class="col-md-9" id="success">
+              <?php echo !empty($message)?$message:''; ?>
+             
+           </div>
+
+           <div class="col-md-3">
+             
+                    <?php echo $pagination_link; ?>
+              
+           </div>
+        </div>
+
+		  <div class="row">
+			 <div class="col-md-12">
+				<div class="box box-info">
+                         
+                    <div class="box-body">
+				          <div id="pagination" align="right">
+                              <?php //echo $this->pagination->create_links(); ?>
+                          </div>
+					   <table width="100%" class="table table-striped table-bordered">
+
+					    <tr>
+				            <th class="font_th"><a href="#">Sl No</a></th>
+				            <th class="font_th"><a href="#">Bill No</a></th>
+				            <th class="font_th"><a href="#">Move From</a></th>
+				            <th class="font_th"><a href="#">Move To</a></th>
+				            <th class="font_th"><a href="#">Date</a></th>
+				            <th class="font_th"><a href="#">Remarks</a></th>
+				            <th class="font_th"><a href="#">Action</a></th>
+				    
+				        </tr>
+		<?php        
+                if(!empty($movementInfo)){						
+				    $j= !empty($next_page)?$next_page+1:1;
+				    for($i=0;$i<count($movementInfo);$i++) {
+		?>						
+				        <tr>
+				          <td><?php echo $j++;?></td>
+					        <td><?php echo $movementInfo[$i][1];?></td>
+							    <td><?php echo $movementInfo[$i][3];?></td>
+							    <td><?php echo $movementInfo[$i][5];?></td>
+							    <td><?php echo $movementInfo[$i][7];?></td>
+							    <td><?php echo $movementInfo[$i][6];?></td>
+              
+						    <td>
+
+                 <button class="btn btn-primary btn-xs" data-title="Print" data-toggle="modal" data-target="#print" onclick="printMovement('<?php echo $movementInfo[$i][1]; ?>')"><span class="glyphicon glyphicon-print"></span></button>
+
+                 <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" onclick="deleteMovement('<?php echo $movementInfo[$i][1]; ?>')"><span class="glyphicon glyphicon-trash"></span></button>
+
+               
+						    </td>
+				        </tr>
+		<?php
+		            }
+		        }
+		?>			   
+					   </table>
+                <input type="hidden" name="move_id" id="move_id">
+                <input type="hidden" name="current_page" id="current_page" value="<?php echo $current_page; ?>">
+
+					</div>
+				</div>
+			</div>
+			</div><!--row-->
+          </section><!-- /.content -->
+    </div><!-- /.container -->
+		        
+</form>    
+
+<?php
+	  $this->load->view("footer"); 
+?>
+
+<script type="text/javascript">
+
+    $(function () {
+   
+     //Date range picker
+        $('#from_date').datepicker();
+        $('#end_date').datepicker();
+     
+   });
+
+$(document).ready(function(){
+
+    /*......pagination......*/  
+      
+    $(".next_page").bind('click', function() {
+
+                 var current_page= $("#current_page").val();
+                 current_page++;
+                 $("#current_page").val(current_page);
+                 $("#manage_movement").attr("action","<?php echo base_url(); ?>index.php/movement/manage_movement");
+                 $("#manage_movement").submit();
+    });
+
+    $(".prev_page").bind('click', function() {
+              
+                 var current_page= $("#current_page").val();
+                 current_page--;
+                 $("#current_page").val(current_page);
+                 $("#manage_movement").attr("action","<?php echo base_url(); ?>index.php/movement/manage_movement");
+                 $("#manage_movement").submit();
+    });
+
+    $(".change_page").bind('click', function() {
+              
+                 var current_page= $(this).attr("id");
+                 $("#current_page").val(current_page);
+                 $("#manage_movement").attr("action","<?php echo base_url(); ?>index.php/movement/manage_movement");
+                 $("#manage_movement").submit();
+    });
+
+  });
+
+function searchForm(){
+      
+      $("#current_page").val('');
+      document.manage_movement.action="<?php echo base_url(); ?>index.php/movement/manage_movement";
+      document.manage_movement.submit();
+
+}
+
+function clearForm(){
+
+      window.location = "<?php echo site_url('movement/manage_movement'); ?>";
+      return false;
+
+}
+
+function printMovement(id) {
+ 
+      $('#move_id').val(id);
+        
+      document.manage_movement.action='<?php echo base_url(); ?>index.php/movement/printMovement';
+      document.manage_movement.submit();
+        
+}
+
+function deleteMovement(id) {
+
+      $('#move_id').val(id);
+    
+      document.manage_movement.action='<?php echo base_url(); ?>index.php/movement/movement_item_delete';
+      document.manage_movement.submit();
+        
+}
+
+</script>

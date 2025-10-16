@@ -1,0 +1,429 @@
+FINAL CHANGES
+================
+ADDED NEW FOLDER IN lib > patient_documents > DIRECT
+
+templates
+=============
+registration
+------------
+print_op_sheet
+
+inpatients
+-----------
+op_search_observation
+
+>index.php
+
+
+
+
+
+
+13/06/25
+====================
+ ++need to clear lab_signature column in employee
+
+1. add phone no in print bill  and phno mandatory in direct bill
+====================================
+templates
+===========
+billing
+--------
+print_bill
+billing_form
+
+13/05/25
+==================
+innoDB changes
+======================
+ALTER TABLE hcare_pharma_item_history ENGINE = InnoDB;
+ ALTER TABLE hcare_bill ENGINE = InnoDB; 
+ ALTER TABLE hcare_bill_items ENGINE = InnoDB; 
+ALTER TABLE hcare_lab_result ENGINE = InnoDB; 
+ALTER TABLE hcare_lab_result_entry ENGINE = InnoDB; 
+ALTER TABLE hcare_pharma_invoice ENGINE = InnoDB; 
+ALTER TABLE hcare_pharma_invoice_items ENGINE = InnoDB; 
+ALTER TABLE hcare_op_patient_info ENGINE = InnoDB; 
+ALTER TABLE hcare_op_visit_info ENGINE = InnoDB; ALTER TABLE hcare_pharma_batch ENGINE = InnoDB;
+
+ALTER TABLE hcare_advance_payments ENGINE = InnoDB; 
+ALTER TABLE hcare_bill_payments ENGINE = InnoDB;
+ALTER TABLE hcare_direct_customer ENGINE = InnoDB;
+ALTER TABLE hcare_pharma_brand ENGINE = InnoDB;
+ALTER TABLE hcare_pharma_credit_payment ENGINE = InnoDB;
+ALTER TABLE hcare_pharma_movement ENGINE = InnoDB;
+ALTER TABLE hcare_pharma_movement_items ENGINE = InnoDB;
+ALTER TABLE hcare_pharma_purchase_orders ENGINE = InnoDB;
+ALTER TABLE hcare_pharma_purchase_order_items ENGINE = InnoDB;
+ALTER TABLE hcare_pharma_recievings ENGINE = InnoDB;
+ALTER TABLE hcare_pharma_recievings_items ENGINE = InnoDB;
+
+
+
+
+4.selectbill op slow issue 
+===========================0/1/2/3/4/6/8/11/13/15/16/19/20/22/23/32/47/57/58/59/81/90
+controller
+============
+billcontroller >getOPPatientInfoNew in select bill
+
+model
+===========
+registration
+-------------
+registration.php >getOPPatientInfoNew
+
+
+
+3.search op patient in registration slow issue 
+============================================
+controller
+============
+registrationController
+model
+===========
+registration >getOPPatientInfoProcessOPSearch
+
+templates
+============
+registration
+---------------
+op_search.php
+
+2.user_type wise searching in manage billing
+=========================================
+controller
+==============
+billcontroller
+
+templates
+============
+manage_billing
+
+1.save which department's bill is prepared
+=================================
+
+controller
+===========
+model
+==========
+billing
+----------
+billing.php
+
+DB
+======
+ALTER TABLE `hcare_bill` ADD `bill_user_type` VARCHAR( 20 ) NOT NULL AFTER `upi` ;
+
+19/04/24
+================================
+
+>repcontroller
+=================================
+select2 in doctor's list dropdown
+====================================================
+admision_form bug
+templates
+==================
+registration
+--------------
+registration_form
+manage_op_patients
+
+inpatients
+------------------------
+manage_ip_patients
+op_search
+
+booking
+-------------
+booking_report.php
+
+report
+-------------------
+booking_report
+doctor_consolidate
+doctor_procedure_report_consolidated
+doctor_op_payments
+doctor_ip_visit_report
+doctors_collection_report
+doctor_medicine_report
+doctor_report
+doctor_procedure_report
+doctor_op_payment_report
+
+
+
+
+admission_form
+
+
+12/8/23
+================================
+1. LAB - OPTION TO ADD NOTE/DESCRIPTION FOR EACH TEST & SHOW IN PRINT
+------------------------------------------
+controller
+================
+labController
+
+model
+=================
+labmodel
+
+templates
+============
+lab > result entry
+--------------------
+result_entry_form
+print_lab_result
+email_lab_result
+
+DB
+--------
+ALTER TABLE `hcare_lab_result_entry` ADD `description` LONGTEXT NULL AFTER `result_id`;
+
+
+7/8/23
+===============================
+1. ADD TOTAL IN ALL REPORTS
+----------------------------------
+daily_collection
+
+doctor
+----------
+doctors_report
+doctor_op_payments
+doctor_op_payment_report
+doctor_procedure_report
+doctor_procedure_report_consolidated
+doctor_ip_visit_consolidate
+doctor_consolidate
+doctor_medicine_report
+
+out patient
+--------------------
+observation_report
+
+inpatient
+------------
+admitted_patient_report
+ip_patient_report
+discharged_patient_report
+
+
+
+4/8
+==========================
+
+3. OPTION TO BOLD HIGH/LOW VALUES IN LAB RESULT PRINT
+---------------------------------------------------
+templates
+===========
+lab
+--------
+result_entry
++++++++++++++++++++++++
+result_entry_form.php
+print_lab_result
+email_lab_result
+
+model
+=====
+lab
+----------------
+labmodel
+
+controller
+==============
+labController
+
+
+DB
+=======
+ALTER TABLE `hcare_lab_result_entry` ADD `test_range` VARCHAR( 10 ) NOT NULL AFTER `description` ;
+
+
+
+2.CHANGE LAB RESULT PRINT - FORMAT (3 COLUMNS)
+----------------------------
+
+1.OBSERVATION AMOUNT NOT TAKING IN FORM - WHILE ADMITTING
+------------------------------------
+templates
+-----------------
+room
+---------------
+category.php
+
+controller
+===============
+roomController
+centralController
+
+3/8
+===================
+1.	ADD GENDER "OTHERS" ON ALL GENDER INPUTS
+-------------------------------------------------
+templates
+-----------
+registration
+-----------
+registration_form
+
+inpatient
+---------------
+admission_form
+
+billing
+---------
+billing_form
+credit_payment_form
+
+lab > result_entry
+----------------------
+result_entry_form
+
+nurse
+----------
+add_ot_schedule
+
+
+
+
+18/07/23
+===============================
+1. Add payment option in op registration
+-------------------------------------------------
+controller
+=========================
+registrationController
+model
+--------------
+registration
+--------------
+registration.php
+
+report
+-------
+report.php
+
+templates
+=================
+registration 
+-------------
+registration_form
+manage_op_patients
+registration_form_ref
+
+reports
+-------
+patient_report
+daily_collection
+bill_collection
+
+DB
+====
+ALTER TABLE `hcare_op_visit_info` ADD `payment_mode` VARCHAR(15) NOT NULL AFTER `discount_amount`;
+
+06/07/23
+---------------------------------last addtobill
+1. ADD UPI PAYMENT OPTION - HCARE
+==============================================
+>language
+>ipfunctions  [calculatebill]
+
+controller
+============
+billController
+repController
+
+model
+===========
+billing
+---------------
+billing.php
+
+report
+----------------
+report.php
+
+registration()
+------------------
+registration.php
+
+templates
+============
+billing
+-----------
+billing_form.php
+manage_billing.php
+credit_payment_form.php
+manage_credit_billing.php
+advance_payment_form.php
+manage_advance_payments
+print_advance_bill
+final_payment_form
+manage_ip_payment
+manage_ip_credit
+ip_credit_payment_form.php 
+manage_ip_credit_payment.php
+
+observation_payment_form (doubt,started).observation charge not showing
+show_observation_bill
+
+reports
+-------------
+billing_report.php
+billing_report_item_details.php
+credit_payment_report
+observation_payment_report
+ip_payment_report
+ip_payment_discount_report
+ip_advance_payments_report
+advance_payment_cancellation_report
+ip_credit_report
+bill_collection.php
+bill_collection_user.php
+
+detailed bill collection report
+profit_report.php
+
+
+
+DB
+===========
+ALTER TABLE `hcare_bill` ADD `upi` FLOAT NOT NULL AFTER `bill_type`
+ALTER TABLE `hcare_bill_payments` ADD `upi_amount` INT( 15 ) NOT NULL AFTER `cancelled_by` ;
+ALTER TABLE `hcare_advance_payments` ADD `upi_amount` FLOAT NOT NULL AFTER `cancelled_by` ;
+ALTER TABLE `hcare_ip_bill` ADD `upi_amount` FLOAT NOT NULL AFTER `opno` ;
+ALTER TABLE `hcare_ip_credit_payments` ADD `upi_amount` FLOAT NOT NULL AFTER `user_id` ;
+
+ALTER TABLE `hcare_op_observation_bills` ADD `upi_amount` FLOAT NOT NULL AFTER `status` ;
+
+Bugs=
+==========
+>credit billing > card paid , upi paid value showing in cash field
+>ip credit payment form not showing paid value
+>ip credit payment select all
+
+
+03/07/23
+-------------------------------
+CONFIGURE OPTION TO CHOOSE OP VISIT TYPE - FREE OF PAYMENT FOR ONE VISIT OR ALL VISIT
+============================================
+config_hims.php
+
+controller
+==============
+registrationController
+
+
+templates
+================
+registration
+----------------
+registration_form.php
+
+booking
+------------------
+booking_report.php

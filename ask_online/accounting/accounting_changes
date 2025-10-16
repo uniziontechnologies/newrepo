@@ -1,0 +1,45 @@
+1.constructor function added in all libraries file 
+2.accounting > system > codeigniter > base 4,5 constructor changes
+3.want to check direct ledger id s in hcare accounting file in case of cron file
+
+UPDATE `hcare_pharma_recievings` SET `online_status` = '0';
+UPDATE `hcare_pharma_recievings` SET `acc_entry_id` = '0';
+
+
+implementation checking in hcare acccounting files
+======================================================
+1. want to check all directly added ledger_id 's are correct
+2. in pharmacy issue check accounting bank account ledger is directly added at implementation time we need client's bank name ledger
+**
+
+CHECKING FILES
+==================
+1. CLIENT'S BANK ACCOUNT NAME NEEDED FOR ADDING BANK ACC LEDGER
+
+*** first we comment update query while testing or use below query while running each query
+
+UPDATE `hcare_pharma_recievings` SET `online_status` = '0';
+UPDATE `hcare_pharma_recievings` SET `acc_entry_id` = '0';
+
+1. acc_cf > creation of new accounting database in all april 1
+
+2. acc_mismatch > mismatch value in trial balance new shows with billno
+
+3. daily _accounting > shows all hcare collections in detailed bill collection all user(report's total amount is same in ledger statement total )> check in cash in hand mode search in ledger statement report in accounting s/w
+
+4. daily pharma stock history > in every day stock is updated
+
+5. pharmacy_accounting_purchase > pcare purchase (check in purchase medicine mode in ledger statement report in acc s/w) 
+
+6. pharmacy_accounting_purchase_return.php > pcare purchase return(check in purchase medicine return mode in ledger statement report in acc s/w)
+
+7. pharmacy_accounting_sales > pcare invoice(check in cash in hand mode in ledger statement report in acc s/w)
+
+8. pharmacy_accounting_sales_return > pcare invoice return(check in cash in hand mode in ledger statement report in acc s/w)
+
+9. pharmacy_accounting_sales_credit > pcare invoice credit(check in cash in hand mode in ledger statement report in acc s/w)
+
+
+10. pharmacy_credit_payments_accounting > pcare purchase credits 
+
+11. pharmacy_issue_checque_accounting > purchase checque payments( all supplier wise shows)
